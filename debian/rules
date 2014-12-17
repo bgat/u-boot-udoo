@@ -1,0 +1,30 @@
+#!/usr/bin/make -f
+export DH_VERBOSE=1
+
+ARCH=$(DEB_HOST_GNU_CPU)
+CROSS_COMPILE=$(DEB_HOST_GNU_TYPE)-
+
+JOBS=$(shell expr 2 \* $(shell cat /proc/cpuinfo | grep processor | wc -l))
+KARGS=ARCH=$(ARCH) CROSS_COMPILE=$(CROSS_COMPILE) -j$(JOBS) V=1
+DESTDIR=debian/u-boot-udoo
+
+%:
+	dh $@
+
+override_dh_auto_clean:
+	$(MAKE) $(KARGS) distclean
+	rm -rf $(DESTDIR) $(DESTDIR_FW)
+
+override_dh_auto_build:
+	$(MAKE) $(KARGS) udoo_quad_defconfig
+	$(MAKE) $(KARGS) all
+
+# TODO: this isn't yet correct, because u-boot.img belongs in the
+# blank area on the SD card (mkos-udoo will ultimately put it there)
+override_dh_auto_install:
+	mkdir -p $(DESTDIR)/boot
+	cp -v u-boot.img $(DESTDIR)/boot
+
+override_dh_auto_configure:
+override_dh_auto_test:
+	true # pass

@@ -1,0 +1,12 @@
+Source: u-boot-udoo
+Section: bootloader
+Priority: extra
+Maintainer: Bill Gatliff <bgat@billgatliff.com>
+Build-Depends: debhelper (>= 8.0.0)
+Standards-Version: 3.9.3
+
+Package: u-boot-udoo
+Architecture: armhf armel
+Depends: ${misc:Depends}
+Description: Das U-Boot bootloader for Udoo
+ Das U-Boot bootloader for Udoo
