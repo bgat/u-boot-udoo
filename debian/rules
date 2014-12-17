@@ -23,7 +23,7 @@ override_dh_auto_build:
 # blank area on the SD card (mkos-udoo will ultimately put it there)
 override_dh_auto_install:
 	mkdir -p $(DESTDIR)/boot
-	cp -v u-boot.img $(DESTDIR)/boot
+	cp -v u-boot.bin $(DESTDIR)/boot
 
 override_dh_auto_configure:
 override_dh_auto_test:
